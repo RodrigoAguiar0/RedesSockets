@@ -12,26 +12,39 @@ import java.net.Socket;
  * @author fer
  */
 public final class WebServer {
-    public static void main(String arvg[]) throws Exception {
     
+    
+    public static void main(String arvg[]) throws Exception {
+        
+//        Socket novoSocket = new Socket();
+//        HttpRequest request = new HttpRequest(novoSocket);
+        
+        while (true) {
+            //Thread thread = new Thread(request);
+            //Aqui deve ser feito a escuta e o incio da thread de cada
+            //requisição.
+            //Mas pelo codigo do professor, não é possivel, pois é um
+            // contexto estático.
+        }
     }
     
     final class HttpRequest implements Runnable {
         final static String CRLF = "\r\n";
         Socket socket;
-        int port = 6789;
-        
+    
+      
         public HttpRequest(Socket socket){
             this.socket = socket;
         }
         
         @Override
         public void run() {
-            while (true) {
-                HttpRequest request = new HttpRequest(new Socket());
-                Thread thread = new Thread(request);
-                thread.start();
+            try {
+                processRequest();
+            } catch(Exception e) {
+                System.out.println(e);
             }
+            
         }
         
         private void processRequest() throws IOException{
