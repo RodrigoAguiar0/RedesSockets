@@ -7,10 +7,13 @@ package rdtprotocolo;
  * Date:
  *************************************/
 import java.util.Random;
+import java.util.concurrent.ArrayBlockingQueue;
 
 public class Remetente extends RedeHost
 
 {
+    private Thread thread;
+    private ArrayBlockingQueue<Pacote> envioDado;
     /*
      * Predefined Constant (static member variables):
      *
@@ -122,6 +125,12 @@ public class Remetente extends RedeHost
     // enviado do receptor.
     protected void Input(Pacote packet)
     {
+        try {
+            this.envioDado.put(packet);
+        }catch(Exception e){
+            System.err.println("Sender: envioDado " + e);
+            System.exit(1);
+        }
     }
     
     // Esta rotina será chamada quando o temporizador do remetente expirar (assim
@@ -137,7 +146,7 @@ public class Remetente extends RedeHost
     // inicialização (por exemplo, de variáveis ​​de membros que você adiciona para controlar o estado
     // do remetente).
     protected void Init()
-    {
+    {   
     }
 
 }
